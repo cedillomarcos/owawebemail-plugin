@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -216,8 +217,8 @@ public class OwaWebConnector {
         
         dataEmail.add(new NameValuePair("hidpnst", ""));
         dataEmail.add(new NameValuePair("txtto", to));
-        if(cc!=null){
-        	dataEmail.add(new NameValuePair("txtcc", cc.toString()));
+        if(cc!=null && cc.length>0){
+        	dataEmail.add(new NameValuePair("txtcc", Arrays.toString(cc).replace("[", "").replace("]", "")));
         }
         dataEmail.add(new NameValuePair("txtbcc", ""));
         //Subject
@@ -240,7 +241,7 @@ public class OwaWebConnector {
         dataEmail.add(new NameValuePair("hidcanary", hidcanary));
         
         
-        httpSendEmail.setRequestBody((NameValuePair[])dataEmail.toArray());
+        httpSendEmail.setRequestBody(dataEmail.toArray(new NameValuePair[dataEmail.size()]));
         httpclient.executeMethod(httpSendEmail);
 
 	}
