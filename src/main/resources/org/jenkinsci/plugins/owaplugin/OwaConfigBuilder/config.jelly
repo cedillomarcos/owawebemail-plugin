@@ -1,0 +1,59 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+<st:adjunct assumes="org.kohsuke.stapler.framework.prototype.prototype" includes="org.kohsuke.stapler.bind"/>
+	
+    <st:bind var="owaBuilderDesc" value="${descriptor}"/>
+	<st:once>
+		<script type="text/javascript">
+			function showEmailTemplate(referenceTag, scriptId){
+			    
+				owaBuilderDesc.getParameters(scriptId, function(t) {
+					var params = t.responseObject();
+					document.getElementsByName("subject").item(0).value=t.responseJSON.subject;
+					document.getElementsByName("to").item(0).value=t.responseJSON.to;
+					document.getElementsByName("cc").item(0).value=t.responseJSON.cc;
+					document.getElementsByName("bcc").item(0).value=t.responseJSON.bcc;
+					document.getElementsByName("owaEmailTemplate").item(0).value=t.responseJSON.owaEmailTemplate;
+					
+				});
+    		}
+    		
+	    </script>
+	</st:once>
+	<f:entry title="OWA Email template" field="buildStepContent">  
+ 		<select name="nameId" onChange="showEmailTemplate(this, this.value);">
+					<option value="">(Default)</option>
+					<j:forEach var="inst" items="${descriptor.emailTemplate}" varStatus="loop">
+						<j:choose>
+							<j:when test="${inst.id == instance.nameId}">
+								<option value="${inst.id}" selected="selected">${inst.name}</option>
+							</j:when>
+							<j:otherwise>
+								<option value="${inst.id}">${inst.name}</option>
+							</j:otherwise>
+						</j:choose>
+					</j:forEach>
+				</select>
+ 		</f:entry>
+ 				
+  							<f:entry title="Asunto">
+        						<f:textbox name="subject" field="subject" value="${s.subject}"/>
+  							</f:entry>
+                            <f:entry title="Enviar a:" >
+	                      		 <f:textbox name="to" field="to" value="${s.to}"/>
+	                   		</f:entry>
+	                   		<f:entry title="Copia a:" >
+	                       		<f:textbox name="cc" field="cc" value="${s.cc}"/>
+	                   		</f:entry>
+	                   	    <f:entry title="Copia oculta a:" >
+	                       	 	<f:textbox name="bcc" field="bcc" value="${s.bcc}"/>
+	                   		</f:entry>
+	              	   
+	                   		<f:entry title="Plantilla Email" description="Email to be send with OWA">
+      							<f:textarea name="owaEmailTemplate" field="owaEmailTemplate" value="${s.owaEmailTemplate}"/>
+    						</f:entry>
+   
+   
+   	
+   
+</j:jelly>
