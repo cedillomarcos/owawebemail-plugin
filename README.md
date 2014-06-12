@@ -29,6 +29,7 @@ ScreenShot
 <b>Jenkins admin panel configuration</b>
 ![ScreenShot](https://raw.github.com/cedillomarcos/owawebemail-plugin/master/screenshots/image01.png)
 
+
 <b>Job plugin configuration</b>
 ![ScreenShot](https://raw.github.com/cedillomarcos/owawebemail-plugin/master/screenshots/image02.png)
 
